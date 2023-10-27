@@ -1,5 +1,6 @@
 package learn.vk.microservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -16,5 +17,6 @@ public class Genre {
     private String name;
 
     @ManyToMany(mappedBy = "genre")
+    @JsonIgnore
     private List<Book> book;
 }

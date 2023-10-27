@@ -1,5 +1,6 @@
 package learn.vk.microservices.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -9,7 +10,6 @@ import java.util.List;
 @Entity
 public class Book {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long bookId;
     private String title;
     private Long price;
@@ -30,10 +30,12 @@ public class Book {
     private List<Genre> genre;
 
     @ManyToMany(mappedBy = "book")
+    @JsonIgnore
     private List<LibraryBranch> libraryBranch;
 
     //    Relation with Borrower
     @ManyToMany(mappedBy = "book")
+    @JsonIgnore
     private List<Borrower> borrower;
 
 }
