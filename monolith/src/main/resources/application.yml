@@ -12,5 +12,6 @@ spring:
     database-platform: org.hibernate.dialect.H2Dialect
     hibernate:
       ddl-auto: create-drop
-
+logging:
+  config: classpath:logback-spring.xml
 #debug: true
