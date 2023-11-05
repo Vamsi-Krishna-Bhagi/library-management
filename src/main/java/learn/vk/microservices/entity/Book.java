@@ -1,6 +1,5 @@
 package learn.vk.microservices.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,6 +14,9 @@ public class Book {
     private Long price;
     private String isbn;
 
+    @Enumerated(EnumType.STRING)
+    private BookStatus status;
+
     @ManyToMany
     @JoinTable(
             name = "book_author",
@@ -22,20 +24,12 @@ public class Book {
             inverseJoinColumns = @JoinColumn(name = "author_id"))
     private List<Author> author;
 
-    @ManyToMany
-    @JoinTable(
-            name = "book_genre",
-            joinColumns = @JoinColumn(name = "book_id"),
-            inverseJoinColumns = @JoinColumn(name = "genre_id"))
-    private List<Genre> genre;
+    @OneToOne(mappedBy = "book")
+    private BorrowingRecord borrowingRecord;
 
-    @ManyToMany(mappedBy = "book")
-    @JsonIgnore
-    private List<LibraryBranch> libraryBranch;
 
-    //    Relation with Borrower
-    @ManyToMany(mappedBy = "book")
-    @JsonIgnore
-    private List<Borrower> borrower;
-
+    public enum BookStatus {
+        AVAILABLE,
+        BORROWED,
+    }
 }

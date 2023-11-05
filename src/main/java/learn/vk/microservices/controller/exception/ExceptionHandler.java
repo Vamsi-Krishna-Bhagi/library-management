@@ -1,6 +1,6 @@
 package learn.vk.microservices.controller.exception;
 
-import lombok.Data;
+import learn.vk.microservices.dto.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
@@ -8,23 +8,17 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @ControllerAdvice
 public class ExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<NotFoundException> handleRuntimeException(RuntimeException ex) {
-        return ResponseEntity.badRequest().body(new NotFoundException(ex.getMessage()));
+    @org.springframework.web.bind.annotation.ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<Object> handleNotFoundException(NotFoundException ex) {
+        return ResponseEntity.badRequest().body(buildResponseEntity(ex.getMessage()));
     }
 
-    @org.springframework.web.bind.annotation.ExceptionHandler(Exception.class)
-    public ResponseEntity<NotFoundException> handleException(Exception ex) {
-        return ResponseEntity.internalServerError().body(new NotFoundException(ex.getMessage()));
+    @org.springframework.web.bind.annotation.ExceptionHandler({GenericException.class})
+    public ResponseEntity<Object> handleException(GenericException ex) {
+        return ResponseEntity.internalServerError().body(buildResponseEntity(ex.getMessage()));
     }
 
-    @Data
-    static class NotFoundException {
-        private final String message;
-
-        public NotFoundException(String message) {
-            System.out.println("NotFoundException.NotFoundException");
-            this.message = message;
-        }
+    private Object buildResponseEntity(String message) {
+        return new Message(message);
     }
 }

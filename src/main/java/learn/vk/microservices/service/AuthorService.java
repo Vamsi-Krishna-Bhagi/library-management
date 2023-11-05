@@ -1,5 +1,6 @@
 package learn.vk.microservices.service;
 
+import learn.vk.microservices.controller.exception.NotFoundException;
 import learn.vk.microservices.entity.Author;
 import learn.vk.microservices.repository.AuthorRepository;
 import lombok.extern.java.Log;
@@ -24,18 +25,18 @@ public class AuthorService {
 
     public Author getAuthorById(Long authorId) {
         log.info("Author Id: " + authorId);
-        return authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
+        return authorRepository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
     }
 
     public Author addAuthor(Author author) {
         authorRepository.findById(author.getAuthorId()).ifPresent(a -> {
-            throw new RuntimeException("Author already exists");
+            throw new NotFoundException("Author already exists");
         });
         return authorRepository.save(author);
     }
 
     public Author updateAuthor(Long authorId, Author author) {
-        Author existingAuthor = authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
+        Author existingAuthor = authorRepository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
         existingAuthor.setName(author.getName());
         existingAuthor.setEmail(author.getEmail());
         existingAuthor.setCountry(author.getCountry());
@@ -43,7 +44,7 @@ public class AuthorService {
     }
 
     public void deleteAuthor(Long authorId) {
-        authorRepository.findById(authorId).orElseThrow(() -> new RuntimeException("Author not found"));
+        authorRepository.findById(authorId).orElseThrow(() -> new NotFoundException("Author not found"));
         authorRepository.deleteById(authorId);
     }
 

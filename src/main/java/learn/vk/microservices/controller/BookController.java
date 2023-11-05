@@ -1,7 +1,6 @@
 package learn.vk.microservices.controller;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.websocket.server.PathParam;
 import learn.vk.microservices.dto.BookDto;
 import learn.vk.microservices.entity.Book;
 import learn.vk.microservices.service.BookService;
@@ -46,23 +45,14 @@ public class BookController {
         bookService.deleteBook(bookId);
     }
 
-    @GetMapping("/genre/{genreId}")
-    public List<Book> getBooksByGenre(@NotNull @PathVariable Long genreId) {
-        return bookService.getBooksByGenre(genreId);
-    }
-
     @GetMapping("/author/{authorId}")
     public List<Book> getBooksByAuthor(@NotNull @PathVariable Long authorId) {
         return bookService.getBooksByAuthor(authorId);
-    }
-
-    @GetMapping("/library-branch/{libraryBranchId}")
-    public List<Book> getBooksByLibraryBranch(@NotNull @PathVariable Long libraryBranchId) {
-        return bookService.getBooksByLibraryBranch(libraryBranchId);
     }
 
     @GetMapping("/borrower/{borrowerId}")
     public List<Book> getBooksByBorrower(@NotNull @PathVariable Long borrowerId) {
         return bookService.getBooksByBorrower(borrowerId);
     }
+
 }

@@ -13,10 +13,6 @@ public class BookDto {
     private String isbn;
 
     private List<Long> authors;
-    private List<Long> genres;
-
-    @Nullable
-    private List<Long> branches;
 
     @Nullable
     private List<Long> borrowers;
