@@ -10,13 +10,9 @@ import java.time.LocalDate;
 @Entity
 public class BorrowingRecord {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne
-    @JsonIgnore
-    private Book book;
-
+    private Long bookId;
     private LocalDate borrowingDate;
     private LocalDate returnDate;
     private Long borrowingUser;
